@@ -285,19 +285,23 @@ def get_data(
 	page_length_count=20,
 	column_field=None,
 	title_field=None,
-	columns=[],
-	rows=[],
-	kanban_columns=[],
-	kanban_fields=[],
+	columns=None,
+	rows=None,
+	kanban_columns=None,
+	kanban_fields=None,
 	view=None,
 	default_filters=None,
 ):
 	custom_view = False
 	filters = frappe._dict(filters)
-	rows = frappe.parse_json(rows or "[]")
-	columns = frappe.parse_json(columns or "[]")
-	kanban_fields = frappe.parse_json(kanban_fields or "[]")
-	kanban_columns = frappe.parse_json(kanban_columns or "[]")
+	rows = frappe.parse_json(rows or "[]") if rows is not None else []
+	columns = frappe.parse_json(columns or "[]") if columns is not None else []
+	kanban_fields = (
+	frappe.parse_json(kanban_fields or "[]") if kanban_fields is not None else []
+	)
+	kanban_columns = (
+	frappe.parse_json(kanban_columns or "[]") if kanban_columns is not None else []
+	)
 
 	custom_view_name = view.get("custom_view_name") if view else None
 	view_type = view.get("view_type") if view else None
